@@ -8,6 +8,9 @@
 /*	Brian Hernandez		10/10/2019			Project 3: Insert/delete/update rows;			*/
 /*														begins on line 145					*/
 /*------------------------------------------------------------------------------------------*/
+/*	Brian Hernandez		10/17/2019			Project 4: Create a view and run multiple selects*/
+/*														begins on line 340					*/
+/*------------------------------------------------------------------------------------------*/
 /********************************************************************************************/
 use master;
 GO
@@ -71,7 +74,7 @@ CREATE TABLE disk_info(
 	disk_status				INT NOT NULL REFERENCES disk_status(status_id),
 	disk_type				INT NOT NULL REFERENCES disk_type(disk_type_id),
 	genre_id				int NOT NULL REFERENCES genre(genre_id),
-	release_date			DATETIME NOT NULL
+	release_date			DATE NOT NULL
 );
 GO
 
@@ -131,11 +134,11 @@ alter role db_datareader add member diskbh;
 
 
 
-/********************************************************************************************************/
+/************************************************/
 
-/*											Begin Project 3 											*/
+/*          	Begin Project 3 	    		*/
 
-/********************************************************************************************************/
+/************************************************/
 
 
 
@@ -176,11 +179,9 @@ GO
 INSERT INTO artist_type
 ([description])
 Values
-('Country'),
-('Alternative Rock'),
-( 'Heavy Metal'), 
-('Classic Rock'),
- ('Pop')
+('Solo'),
+('Band')
+
 go
 
 --c. Disk table
@@ -252,22 +253,22 @@ VALUES
 	,('Taylor', 'Swift', 1)
 	,('Alanis', 'Morrisette', 1)
 	,('Chris', 'Daughtry', 1)
-	,('The Cars', null, 1)
-	,('Black', 'Sabbath', 1)
-	,('Stone Temple Pilots', null, 1)
-	,('Seether', NULL, 1)
-	,('Disturbed',NULL, 1)
-	,('Willie', 'nelson', 1)
-	,('The White Stripes', NULL, 1)
-	,('The Rolling Stones', null, 1)
-	,('Creedence Clearwater Revival',Null, 1)
-	,('The', 'Beatles', 1)
-	,('R.E.M', null, 1)
-	,('Lynyrd','Skynyrd', 1)
+	,('The Cars', null, 2)
+	,('Black Sabbath',null, 2)
+	,('Stone Temple Pilots', null, 2)
+	,('Seether', NULL, 2)
+	,('Disturbed',NULL, 2)
+	,('Paul', 'McCartney', 1)
+	,('The White Stripes', NULL, 2)
+	,('The Rolling Stones', null, 2)
+	,('Creedence Clearwater Revival',Null, 2)
+	,('The Beatles', null, 2)
+	,('R.E.M', null, 2)
+	,('Lynyrd Skynyrd',null, 2)
 	,('Serj', 'Tankian', 1)
-	,('Avenged', 'Sevenfold', 1)
-	,('Gratefull', 'Dead', 1)
-	,('Metallica', NULL, 1);
+	,('Avenged Sevenfold', null, 2)
+	,('Gratefull Dead', null, 2)
+	,('Metallica', NULL, 2);
 GO
 
 
@@ -329,3 +330,67 @@ GO
 SELECT borrower_id, disk_id, borrow_date, return_date
 FROM disk_borrower
 WHERE return_date IS NULL;
+
+/************************************************/
+
+/*          	Begin Project 4 	    		*/
+
+/************************************************/
+
+--3. Show the disks in your database and any associated Individual artists only. Sort by Artist Last Name, First Name & Disk Name.
+select disk_name as [Disk Name], release_date as [Release Date], artist_first as [Artist First Name], artist_last as [Artist Last Name]
+from disk_info
+join cd_artist on cd_artist.disk_id = disk_info.disk_id
+join artist on artist.artist_id = cd_artist.artist_id
+join artist_type on artist.artist_type_id = artist_type.artist_type_id
+where artist_type.artist_type_id = 1
+order by 4, 3, 1
+GO
+
+--4. Create a view called View_Individual_Artist that shows the artists’ names and not group names. Include the artist id in the view definition but do not display the id in your output.
+drop view if exists View_Individual_Artist
+go
+create view View_Individual_Artist AS
+select artist_first, artist_last, artist_id
+from artist
+
+where artist.artist_type_id = 1
+go
+
+select artist_first as [Artist First], artist_last as [Artist Last] from View_Individual_Artist
+
+--5. Show the disks in your database and any associated Group artists only. Use the View_Individual_Artist view. Sort by Group Name & Disk Name.
+
+select disk_name as [Disk Name], release_date as [Release Date], artist_first as [Group Name]
+from disk_info
+join cd_artist on cd_artist.disk_id = disk_info.disk_id
+join artist on artist.artist_id = cd_artist.artist_id
+where artist.artist_id not in 
+	(select artist_id from View_Individual_Artist)
+order by 3, 1
+
+--6. Show which disks have been borrowed and who borrowed them. Sort by Borrower’s Last Name, then First Name, then Disk Name, then Borrowed Date, then Returned Date.
+
+select borrower_first as [First], borrower_last as [Last], disk_name as [Disk Name], convert(varchar, borrow_date, 120) as [Check Out Date], ISNULL(convert(varchar, return_date,120), 'NOT YET RETURNED') AS [Return Date]
+from borrower
+join disk_borrower on disk_borrower.borrower_id = borrower.borrower_id
+join disk_info on disk_info.disk_id = disk_borrower.disk_id
+order by 2, 1, 3, 4, 5
+
+--7. In disk_id order, show the number of times each disk has been borrowed.
+
+select disk_borrower.disk_id, disk_name, count(*) as [Times Borrowed] 
+from disk_borrower
+join disk_info on disk_info.disk_id = disk_borrower.disk_id
+group by disk_borrower.disk_id, disk_name
+order by 1
+
+
+--8. Show the disks outstanding or on-loan and who has each disk. Sort by disk name.
+--select disk_name, borrow_date as [Borrowed], return_date AS Returned, borrower_last as [Last Name]
+
+select disk_name as [Disk Name], borrow_date as [Borrowed], ISNULL(convert(varchar, return_date,23), 'NOT YET RETURNED') AS Returned, borrower_last as [Last Name]
+from disk_borrower
+join borrower as b on b.borrower_id = disk_borrower.borrower_id
+join disk_info as di on di.disk_id = disk_borrower.disk_id
+where return_date IS NULL

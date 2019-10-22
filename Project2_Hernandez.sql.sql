@@ -1,17 +1,20 @@
-/********************************************************************************************/
-/*																							*/
-/*	Author					Date				Log											*/
-/*------------------------------------------------------------------------------------------*/
-/*	Brian Hernandez		10/3/2019			Initial deployment of database					*/
-/*											'disk_inventoryBH								*/
-/*------------------------------------------------------------------------------------------*/
-/*	Brian Hernandez		10/10/2019			Project 3: Insert/delete/update rows;			*/
-/*														begins on line 145					*/
-/*------------------------------------------------------------------------------------------*/
-/*	Brian Hernandez		10/17/2019			Project 4: Create a view and run multiple selects*/
-/*														begins on line 340					*/
-/*------------------------------------------------------------------------------------------*/
-/********************************************************************************************/
+/********************************************************************************/
+/*																				*/
+/*	Author			Date			Log											*/
+/*------------------------------------------------------------------------------*/
+/*	Brian Hernandez	10/3/2019	Initial deployment of database					*/
+/*									'disk_inventoryBH							*/
+/*------------------------------------------------------------------------------*/
+/*	Brian Hernandez	10/10/2019	Project 3: Insert/delete/update rows;			*/
+/*									begins on line 145							*/	
+/*------------------------------------------------------------------------------*/
+/*	Brian Hernandez	10/17/2019	Project 4: Create a view and run multiple selects*/
+/*									begins on line 340							*/
+/*------------------------------------------------------------------------------*/
+/*	Brian Hernandez	10/22/2019	Project 5: Create and Exec stored procedures		*/
+/*									begins on line 400							*/
+/*------------------------------------------------------------------------------*/
+/********************************************************************************/
 use master;
 GO
 
@@ -327,7 +330,7 @@ INSERT INTO [dbo].[cd_artist]
 GO
 
 --h. Create a query to list the disks that are on loan and have not been returned.
-SELECT borrower_id, disk_id, borrow_date, return_date
+SELECT borrower_id, disk_id, convert(date,borrow_date,23) as [Borrow Date], convert(date,return_date, 23) as [Return Date]
 FROM disk_borrower
 WHERE return_date IS NULL;
 
@@ -371,7 +374,7 @@ order by 3, 1
 
 --6. Show which disks have been borrowed and who borrowed them. Sort by Borrower’s Last Name, then First Name, then Disk Name, then Borrowed Date, then Returned Date.
 
-select borrower_first as [First], borrower_last as [Last], disk_name as [Disk Name], convert(varchar, borrow_date, 120) as [Check Out Date], ISNULL(convert(varchar, return_date,120), 'NOT YET RETURNED') AS [Return Date]
+select borrower_first as [First], borrower_last as [Last], disk_name as [Disk Name], convert(date, borrow_date, 120) as [Check Out Date], ISNULL(convert(varchar, return_date,23), 'NOT YET RETURNED') AS [Return Date]
 from borrower
 join disk_borrower on disk_borrower.borrower_id = borrower.borrower_id
 join disk_info on disk_info.disk_id = disk_borrower.disk_id
@@ -389,8 +392,90 @@ order by 1
 --8. Show the disks outstanding or on-loan and who has each disk. Sort by disk name.
 --select disk_name, borrow_date as [Borrowed], return_date AS Returned, borrower_last as [Last Name]
 
-select disk_name as [Disk Name], borrow_date as [Borrowed], ISNULL(convert(varchar, return_date,23), 'NOT YET RETURNED') AS Returned, borrower_last as [Last Name]
+select disk_name as [Disk Name], convert(date,borrow_date) as [Borrowed], ISNULL(convert(varchar, return_date,23), 'NOT YET RETURNED') AS Returned, borrower_last as [Last Name]
 from disk_borrower
 join borrower as b on b.borrower_id = disk_borrower.borrower_id
 join disk_info as di on di.disk_id = disk_borrower.disk_id
 where return_date IS NULL
+
+
+
+---------Project 5----------
+
+--2. Create Insert, Update, and Delete stored procedures for the artist table. Update procedure accepts a primary key value and the artist’s names for update. Insert accepts all columns as input parameters except for identity fields. Delete accepts a primary key value for delete.
+
+
+--Insert Artist Stored Procedure
+drop proc if exists sp_Insert_Artist
+go
+
+create PROC sp_Insert_Artist
+	@artist_first	nvarchar(100),
+	@artist_type_id	int,
+	@artist_last	nvarchar(100) = NULL
+as
+begin try
+	INSERT INTO [dbo].[artist]
+			   ([artist_first]
+			   ,[artist_last]
+			   ,[artist_type_id])
+		 VALUES
+			   (@artist_first
+			   ,@artist_last
+			   ,@artist_type_id)
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' +  convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+
+end catch
+GO
+
+
+--Update Artist Stored Procedure
+drop proc if exists sp_Update_Artist
+go
+create proc sp_Update_Artist
+	@artist_id int,
+	@artist_first nvarchar(100),
+	@artist_last nvarchar(100),
+	@artist_type_id int
+as
+begin try
+	UPDATE [dbo].[artist]
+	   SET [artist_first] = @artist_first
+		  ,[artist_last] = @artist_last
+		  ,[artist_type_id] = @artist_type_id
+	 WHERE artist_id = @artist_id
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' + convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+end catch
+GO
+
+--Delete Artist Stored Procedure
+drop proc if exists sp_Delete_Artist
+go
+Create proc sp_Delete_Artist
+	@artist_id int
+as
+begin try
+	DELETE FROM [dbo].[artist]
+		  WHERE artist_id = @artist_id;
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' + convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+end catch
+
+GO
+
+--execute statements for stored procedures
+exec sp_Update_Artist 22, 'Bruno', 'Mars', 1
+exec sp_Insert_Artist 'Cher', 1
+exec sp_Delete_Artist 23
+select * from artist

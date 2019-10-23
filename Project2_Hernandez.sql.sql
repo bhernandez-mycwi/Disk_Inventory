@@ -11,8 +11,9 @@
 /*	Brian Hernandez	10/17/2019	Project 4: Create a view and run multiple selects*/
 /*									begins on line 340							*/
 /*------------------------------------------------------------------------------*/
-/*	Brian Hernandez	10/22/2019	Project 5: Create and Exec stored procedures		*/
-/*									begins on line 400							*/
+/*	Brian Hernandez	10/23/2019	Project 5: Create and Exec stored procedures	*/
+/*										   for Artist, Borrower, and Disk info	*/
+/*									begins on line 403							*/
 /*------------------------------------------------------------------------------*/
 /********************************************************************************/
 use master;
@@ -400,12 +401,15 @@ where return_date IS NULL
 
 
 
----------Project 5----------
+----------Project 5----------
+
+use disk_inventoryBH;
+go
 
 --2. Create Insert, Update, and Delete stored procedures for the artist table. Update procedure accepts a primary key value and the artist’s names for update. Insert accepts all columns as input parameters except for identity fields. Delete accepts a primary key value for delete.
 
 
---Insert Artist Stored Procedure
+--2.a.  Stored Procedure to insert new artist info. Insert Artist Stored Procedure
 drop proc if exists sp_Insert_Artist
 go
 
@@ -432,8 +436,12 @@ begin catch
 end catch
 GO
 
+exec sp_Insert_Artist 'Cher', 1
+select * from artist
+where artist_id = @@IDENTITY
+go
 
---Update Artist Stored Procedure
+--2.b.  Stored Procedure to update artist info. Update Artist Stored Procedure
 drop proc if exists sp_Update_Artist
 go
 create proc sp_Update_Artist
@@ -456,7 +464,11 @@ begin catch
 end catch
 GO
 
---Delete Artist Stored Procedure
+
+exec sp_Update_Artist 22, 'Bruno', 'Mars', 1
+select * from artist
+GO
+--2.c.  Stored Procedure to delete artist info. Delete Artist Stored Procedure
 drop proc if exists sp_Delete_Artist
 go
 Create proc sp_Delete_Artist
@@ -474,8 +486,179 @@ end catch
 
 GO
 
---execute statements for stored procedures
-exec sp_Update_Artist 22, 'Bruno', 'Mars', 1
-exec sp_Insert_Artist 'Cher', 1
 exec sp_Delete_Artist 23
 select * from artist
+
+--3. Create Insert, Update, and Delete stored procedures for the borrower table. Update procedure accepts a primary key value and the borrower’s names for update. Insert accepts all columns as input parameters except for identity fields. Delete accepts a primary key value for delete.
+
+--3.a  Stored Procedure to insert new borrower info. Insert accepts all columns as input parameters except for identity fields.
+
+drop proc if exists sp_Insert_Borrower
+go
+
+create PROC sp_Insert_Borrower
+	@borrower_first	nvarchar(100),
+	@borrower_last	nvarchar(100),
+	@borrower_phone	nvarchar(20)
+as
+begin try
+	INSERT INTO [dbo].[borrower]
+			   ([borrower_first]
+			   ,[borrower_last]
+			   ,[borrower_phone_number])
+		 VALUES
+			   (@borrower_first
+			   ,@borrower_last
+			   ,@borrower_phone)
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' +  convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+
+end catch
+GO
+
+exec sp_Insert_Borrower 'Heather', 'Hernandez', '7072186250'
+select * from borrower
+
+--3.b.  Stored Procedure to update borrower info. Update procedure accepts a primary key value and the borrower’s names for update
+
+drop proc if exists sp_Update_Borrower
+go
+create proc sp_Update_Borrower
+	@borrower_id int,
+	@borrower_first	nvarchar(100),
+	@borrower_last	nvarchar(100),
+	@borrower_phone	nvarchar(20)
+as
+begin try
+	UPDATE [dbo].borrower
+	   SET [borrower_first] = @borrower_first
+		  ,[borrower_last] = @borrower_last
+		  ,[borrower_phone_number] = @borrower_phone
+	 WHERE borrower_id = @borrower_id
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' + convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+end catch
+GO
+
+exec sp_Update_Borrower 16, 'David', 'Hernandez', '7852348008'
+select * from borrower
+
+--3.c. Stored Procedure to delete borrower info. Delete accepts a primary key value for delete.
+
+drop proc if exists sp_Delete_Borrower
+go
+Create proc sp_Delete_Borrower
+	@borrower_id int
+as
+begin try
+	DELETE FROM [dbo].borrower
+		  WHERE borrower_id = @borrower_id;
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' + convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+end catch
+
+GO
+
+exec sp_Delete_Borrower 22
+select * from borrower
+
+--4. Create Insert, Update, and Delete stored procedures for the disk table. Update procedure accepts a primary key value and the disk information for update. Insert accepts all columns as input parameters except for identity fields. Delete accepts a primary key value for delete.
+
+--4.a  Stored Procedure to insert new disk info. Insert accepts all columns as input parameters except for identity fields.
+drop proc if exists sp_Insert_DiskInfo
+go
+
+create PROC sp_Insert_DiskInfo
+	@diskName	nvarchar(50)
+	,@diskStatus	int
+	,@diskType	int
+	,@genreID	int
+	,@releaseDate	date
+as
+begin try
+	INSERT INTO [dbo].disk_info
+			   ([disk_name]
+			   ,[disk_status]
+			   ,[disk_type]
+			   ,[genre_id]
+			   ,[release_date])
+		 VALUES
+			   ( @diskName
+			   ,@diskStatus
+			   ,@diskType
+			   ,@genreID
+			   ,@releaseDate)
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' +  convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+
+end catch
+GO
+
+exec sp_Insert_DiskInfo 'Back In Black', 2, 1, 2, '1980'
+select * from disk_info
+select * from genre
+
+
+--4.b. Stored Procedure to update disk info. Update procedure accepts a primary key value and the disk information for update.
+drop proc if exists sp_Update_DiskInfo
+go
+create proc sp_Update_DiskInfo
+	@disk_id int
+	,@diskName	nvarchar(50)
+	,@diskStatus	int
+	,@diskType	int
+	,@genreID	int
+	,@releaseDate	date
+as
+begin try
+	UPDATE [dbo].disk_info
+	   SET disk_name = @diskName
+		  ,disk_status = @diskStatus
+		  ,disk_type = @diskType
+		  ,genre_id = @genreID
+		  ,release_date = @releaseDate
+	 WHERE disk_id = @disk_id
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' + convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+end catch
+GO
+exec sp_Update_DiskInfo @@IDENTITY, 'Highway to Hell', 2, 1, 1, '1979'
+select * from disk_info
+
+--4.c. Stored Procedure to delete disk info. Delete accepts a primary key value for delete
+
+drop proc if exists sp_Delete_DiskInfo
+go
+Create proc sp_Delete_DiskInfo
+	@diskID int
+as
+begin try
+	DELETE FROM [dbo].disk_info
+		  WHERE disk_id = @diskID;
+end try
+begin catch
+	print 'An error has occurred. Row was not inserted';
+	print 'Error Number: ' + convert(varchar, ERROR_NUMBER());
+	print 'Error Message: ' + ERROR_MESSAGE();
+end catch
+
+GO
+
+exec sp_Delete_DiskInfo 21
+select * from disk_info
+go

@@ -1,7 +1,31 @@
-﻿/* Move down content because we have a fixed navbar that is 50px tall */
-body {
+﻿div#Main1 {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 15%;
+}
+div#Borrower {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 15%;
+}
+div#Disks {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 15%;
+}
+
+
+    /* Move down content because we have a fixed navbar that is 50px tall */
+    body {
     padding-top: 50px;
     padding-bottom: 20px;
+   
 }
 
 /* Wrapping element */
@@ -24,8 +48,11 @@ body {
 div.container{
     display: block;
     margin: 0px auto;
-    width: 50%;
+    width: 90%;
    
+}
+#listView{
+    width: 100%;
 }
 
 

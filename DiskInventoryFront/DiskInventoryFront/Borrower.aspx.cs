@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace DiskInventoryFront
 {
@@ -18,7 +20,23 @@ namespace DiskInventoryFront
         {
             if (IsValid)
             {
-                
+                SqlConnection con = new SqlConnection();
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["disk_inventoryBHConnectionString2"].ConnectionString;
+                con.Open();
+                SqlCommand cmd = new SqlCommand("sp_Insert_Borrower", con);
+                //cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@borrower_first", txtFirst.Text);
+                cmd.Parameters.AddWithValue("@borrower_phone", txtPhone.Text);
+                cmd.Parameters.AddWithValue("@borrower_last", txtLast.Text);
+                // If you are passing any parameters to your Stored procedure
+                // cmd.Parameters.AddWithValue("@Parameter_name", Parameter_value);
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                Response.Redirect("Borrower.aspx");
+
                 lblMessage.Text = "The following information has been submitted:" +
                     "</br>" + "First Name: " + txtFirst.Text +
                     "</br>" + "Last Name: " + txtLast.Text +

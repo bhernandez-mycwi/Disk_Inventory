@@ -190,6 +190,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Account\Web.config" />
     <Content Include="Images\construction.png" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Images\disc.png" />
     <Content Include="Images\gentina-danurendra-YYiGaIqvMv8-unsplash.jpg" />

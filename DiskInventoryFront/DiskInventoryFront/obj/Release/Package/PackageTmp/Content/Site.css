@@ -1,4 +1,42 @@
-﻿/* Move down content because we have a fixed navbar that is 50px tall */
+﻿#diskheader {
+    color: white;
+}
+ul#navbar li a, ul#navbar2 li a, ul#navbar3 li a{
+    color:white;
+}
+ul#navbar li a:hover, ul#navbar2 li a:hover, ul#navbar3 li a:hover {
+    text-decoration: underline;
+}
+
+
+div#Main1 {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 15%;
+}
+div#Borrower {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 15%;
+}
+div#Disks {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 15%;
+}
+input.login{
+    margin: 0px auto;
+}
+#Image1 {
+    animation: spin 2s linear infinite
+}
+/* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
     padding-bottom: 20px;
@@ -24,8 +62,11 @@ body {
 div.container{
     display: block;
     margin: 0px auto;
-    width: 50%;
+    width: 90%;
    
+}
+#listView{
+    width: 100%;
 }
 
 
@@ -38,6 +79,14 @@ input[type="select"] {
     max-width: 280px;
 }
 
+@keyframes spin{
+    0%{transform: rotate(0deg);}
+    25%{transform: rotate(90deg);}
+    50%{transform: rotate(180deg);}
+    75%{transform: rotate(270deg);}
+    100%{transform: rotate(360deg);}
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .jumbotron {
@@ -47,6 +96,7 @@ input[type="select"] {
     .body-content {
         padding: 0;
     }
+   
 
     
 }

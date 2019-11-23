@@ -16,7 +16,66 @@
 
 </head>
 <body>
-    <form runat="server">
+    <form runat="server" class="text-center">
+
+        <div class="navbar navbar-inverse navbar-fixed-top" style="left: 0; right: 0; top: 0; height: 44px">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="text-left">
+                        <asp:Image ID="Image1" runat="server" ImageUrl="~/Images/CDlogo.png" Height="50px" ImageAlign="Left" Width="50px" />
+                        <a class="navbar-brand text-white" id="diskheader" runat="server" href="~/">Disk Inventory</a><br />
+                    </div>
+                    
+</div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav" id="navbar">
+                        <li><a runat="server" href="~/">Home</a></li>
+                         
+                                    <li><a runat="server" href="~/Maintenance/Artists">Artists</a></li>
+                                    <li><a runat="server" href="~/Maintenance/Disks">Disks</a></li>
+                                    <li><a runat="server" href="~/Maintenance/Borrower">Borrower</a></li>
+                                
+                        
+                    </ul>
+                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                       <AnonymousTemplate>
+                            <ul class="nav navbar-nav navbar-right" id ="navbar2">
+                                <li><a runat="server" href="~/Account/Register">Register</a></li>
+                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                            </ul>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                            <div class ="navbar-collapse collapse">
+                               
+                                <ul class="nav navbar-nav navbar-right" id="navbar3">
+                                    <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
+                                    <li>
+                                        <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/Account/Login.aspx" OnLoggingOut="Unnamed_LoggingOut" />
+
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                            
+                                
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                </div>
+            </div>
+        </div>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer>
+                <p>&copy; <%: DateTime.Now.Year %> - Disk Inventory Application</p>
+            </footer>
+        </div>
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -37,50 +96,6 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top" style="left: 0; right: 0; top: 0; height: 44px">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="~/">Disk Inventory</a><br />
-&nbsp;</div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/Artists">Artists</a></li>
-                        <li><a runat="server" href="~/Disks">Disks</a></li>
-                        <li><a runat="server" href="~/Borrower">Borrower</a></li>
-                    </ul>
-                    <%--<asp:LoginView runat="server" ViewStateMode="Disabled">--%>
-                       <%-- <AnonymousTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
-                                <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
-                                </li>
-                            </ul>
-                        </LoggedInTemplate>
-                    </asp:LoginView>--%>
-                </div>
-            </div>
-        </div>
-        <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy;2019 <%: DateTime.Now.Year %> -Disk Inventory Application</p>
-            </footer>
-        </div>
     </form>
 </body>
 </html>

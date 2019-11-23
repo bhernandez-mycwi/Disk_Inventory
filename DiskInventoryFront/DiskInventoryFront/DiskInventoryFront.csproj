@@ -168,15 +168,16 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
-    <Content Include="Artists.aspx" />
-    <Content Include="Borrower.aspx" />
+    <Content Include="Maintenance\Artists.aspx" />
+    <Content Include="Maintenance\Borrower.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\JavaScript.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
-    <Content Include="Disks.aspx" />
+    <Content Include="Maintenance\Disks.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -189,7 +190,9 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Account\Web.config" />
+    <Content Include="Images\CDlogo.png" />
     <Content Include="Images\construction.png" />
+    <Content Include="Maintenance\Web.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Images\disc.png" />
@@ -338,18 +341,18 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Artists.aspx.cs">
+    <Compile Include="Maintenance\Artists.aspx.cs">
       <DependentUpon>Artists.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Artists.aspx.designer.cs">
+    <Compile Include="Maintenance\Artists.aspx.designer.cs">
       <DependentUpon>Artists.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Borrower.aspx.cs">
+    <Compile Include="Maintenance\Borrower.aspx.cs">
       <DependentUpon>Borrower.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Borrower.aspx.designer.cs">
+    <Compile Include="Maintenance\Borrower.aspx.designer.cs">
       <DependentUpon>Borrower.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
@@ -359,11 +362,11 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Disks.aspx.cs">
+    <Compile Include="Maintenance\Disks.aspx.cs">
       <DependentUpon>Disks.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Disks.aspx.designer.cs">
+    <Compile Include="Maintenance\Disks.aspx.designer.cs">
       <DependentUpon>Disks.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">

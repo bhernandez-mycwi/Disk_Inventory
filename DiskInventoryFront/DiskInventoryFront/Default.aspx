@@ -21,8 +21,8 @@
             </div>
         <p>
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:disk_inventoryBHConnectionString %>" SelectCommand="select disk_name,artist_first, artist_last  from disk_info
-            join cd_artist on cd_artist.disk_id = disk_info.disk_id
-            join artist on artist.artist_id = cd_artist.artist_id
+            left join cd_artist on cd_artist.disk_id = disk_info.disk_id
+            left join artist on artist.artist_id = cd_artist.artist_id
             where disk_info.disk_status = 2;
             "></asp:SqlDataSource>
         </p>

@@ -3,7 +3,12 @@
 <%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <div id="login">
     <h2><%: Title %></h2>
+
+    <!-- Added styling for login pages -->
+    <!-- Added database for users who register -->
+    <!-- Restricted users to only view management pages once authenticated-->
 
     <div class="row">
         <div class="col-md-offset-2 col-md-8 ">
@@ -50,7 +55,7 @@
                     </div>
                 </div>
                 <p>
-                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register as a new user</asp:HyperLink>
+                    <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled" NavigateUrl="~/Account/Register.aspx">Register as a new user</asp:HyperLink>
                 </p>
                 <p>
                     <%-- Enable this once you have account confirmation enabled for password reset functionality
@@ -66,4 +71,5 @@
             </section>--%>
         </div>
     </div>
+        </div>
 </asp:Content>

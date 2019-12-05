@@ -99,3 +99,4 @@ C:\sandbox\project2\DiskInventoryFront\DiskInventoryFront\obj\Release\DiskInvent
 C:\sandbox\project2\DiskInventoryFront\DiskInventoryFront\obj\Release\DiskInventoryFront.csproj.CopyComplete
 C:\sandbox\project2\DiskInventoryFront\DiskInventoryFront\obj\Release\DiskInventoryFront.dll
 C:\sandbox\project2\DiskInventoryFront\DiskInventoryFront\obj\Release\DiskInventoryFront.pdb
+C:\sandbox\project2\DiskInventoryFront\DiskInventoryFront\obj\Release\DiskInventoryFront.csprojAssemblyReference.cache

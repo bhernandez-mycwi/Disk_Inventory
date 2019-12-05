@@ -1,12 +1,20 @@
-﻿<%@ Page Title="Artists" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Artists.aspx.cs" Inherits="DiskInventoryFront.Artists" %>
+﻿<%--/*************************************************************************************/
+/*  Date	Name	Description                                                      */
+/*  -----------------------------------------------------------------------------    */
+/*                                                                                   */
+/*  12/02/2019  Brian Hernandez   Page to insert/update/delete artist info           */
+/*************************************************************************************/--%>
+<%@ Page Title="Artists" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Artists.aspx.cs" Inherits="DiskInventoryFront.Artists" %>
     <%-- Page to insert/update/delete Artist Info using stored procedures--%>
 
-<!-- Artist Management can only be accessed once user is authenticated -->
+<%--Artist Management can only be accessed once user is authenticated --%>
    
 
 <asp:Content ID="Content1" runat="server" contentplaceholderid="MainContent">
-    <h1>Artist Information</h1>
+    <br />
     <div id="Main1">
+        <h1>Artist Information</h1>
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="text-danger" DisplayMode="List" />
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="artist_id" DataSourceID="SqlDataSource1" AllowSorting="True">
         <Columns>
             <asp:TemplateField ShowHeader="False">
@@ -36,7 +44,7 @@
                     <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("artist_last") %>'></asp:TextBox>
                 </EditItemTemplate>
                 <ItemTemplate>
-                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("artist_last") %>'></asp:Label>
+                    <asp:Label ID="Label2" runat="server" Text='<%# Bind("artist_last") %>' CssClass="bg-light"></asp:Label>
                 </ItemTemplate>
             </asp:TemplateField>
             <asp:TemplateField HeaderText="Type ID" SortExpression="artist_type_id">
@@ -92,12 +100,12 @@
             <asp:Button ID="btnClear" runat="server" Text="Clear" OnClick="btnClear_Click" CssClass="btn-primary" CausesValidation="False" />
         </div>
         <br />
-        <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="text-danger" DisplayMode="List" />
+        
         <asp:Label ID="lblError" runat="server"></asp:Label>
             
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:disk_inventoryBHConnectionString2 %>" 
             SelectCommand="SELECT [artist_first], [artist_last], [artist_type_id], [artist_id] FROM [artist] ORDER BY [artist_last], [artist_first]" 
-            DeleteCommand="sp_Delete_Artist" DeleteCommandType="StoredProcedure" 
+            DeleteCommand="exec sp_Delete_Artist @artist_id" 
             InsertCommand="INSERT INTO [artist] ([artist_first], [artist_last], [artist_type_id]) VALUES (@artist_first, @artist_last, @artist_type_id)"  
             UpdateCommand="sp_Update_Artist" UpdateCommandType="StoredProcedure">
             <DeleteParameters>

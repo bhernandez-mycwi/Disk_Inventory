@@ -1,4 +1,5 @@
-﻿#diskheader {
+﻿
+#diskheader {
     color: white;
 }
 ul#navbar li a, ul#navbar2 li a, ul#navbar3 li a{
@@ -15,6 +16,8 @@ div#Main1 {
     margin-left: auto;
     text-align: center;
     padding: 0px 15%;
+    background-color:white;
+    border-radius: 5px;
 }
 div#Borrower {
     display: inline-block;
@@ -22,24 +25,51 @@ div#Borrower {
     margin-left: auto;
     text-align: center;
     padding: 0px 15%;
+    background-color: white;
+    border-radius: 5px;
 }
 div#Disks {
     display: inline-block;
     margin-right: auto;
     margin-left: auto;
     text-align: center;
-    padding: 0px 15%;
+    padding: 0px 5%;
+    background-color: white;
+    border-radius: 5px;
+}
+div#Checkout {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 5%;
+    background-color: white;
+    border-radius: 5px;
+}
+div#login, div#Register{
+    background-color:white;
+}
+div#errorPage {
+    display: inline-block;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    padding: 0px 5%;
+    background-color: white;
+    border-radius: 5px;
 }
 input.login{
     margin: 0px auto;
 }
 #Image1 {
-    animation: spin 2s linear infinite
+    animation: spin 1s linear infinite
 }
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-image: url("../Images/cdbackground.jpg");
+    background-size: 100%;
 }
 
 /* Wrapping element */
@@ -59,6 +89,7 @@ body {
     background: linear-gradient(to bottom right, #0066ff 0%, #6600ff 100%);
     border-radius: 5px;
 }
+
 div.container{
     display: block;
     margin: 0px auto;
@@ -68,6 +99,22 @@ div.container{
 #listView{
     width: 100%;
 }
+.footer {
+    background-color: white;
+    font-weight: bold;
+    position: fixed;
+    bottom: 0px;
+    left:0px;
+    display: block;
+    width:100%;
+    text-align:center;
+    margin: 0px auto;
+    
+    
+    
+    
+}
+
 
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -80,11 +127,31 @@ input[type="select"] {
 }
 
 @keyframes spin{
-    0%{transform: rotate(0deg);}
-    25%{transform: rotate(90deg);}
-    50%{transform: rotate(180deg);}
-    75%{transform: rotate(270deg);}
-    100%{transform: rotate(360deg);}
+    0% {
+        transform: rotate(0deg);
+        /*transform: rotateX(0deg);
+        transform: rotateY(0deg);*/
+    }
+    25% {
+        transform: rotate(90deg);
+        /*transform: rotateX(90deg);
+        transform: rotateY(90deg);*/
+    }
+    50% {
+        transform: rotate(180deg);
+        /*transform: rotateX(180deg);
+        transform: rotateY(180deg);*/
+    }
+    75% {
+        transform: rotate(270deg);
+        /*transform: rotateX(270deg);
+        transform: rotateY(270deg);*/
+    }
+    100% {
+        transform: rotate(360deg);
+        /*transform: rotateX(360deg);
+        transform: rotateY(360deg);*/
+    }
 }
 
 /* Responsive: Portrait tablets and up */
@@ -96,7 +163,9 @@ input[type="select"] {
     .body-content {
         padding: 0;
     }
-   
+    .navbar-inner {
+        background: black;
+    }
 
     
 }

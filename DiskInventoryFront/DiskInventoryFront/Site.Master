@@ -32,13 +32,14 @@
                     </div>
                     
 </div>
-                <div class="navbar-collapse collapse">
+                <div class="navbar-collapse collapse" id ="collapse">
                     <ul class="nav navbar-nav" id="navbar">
                         <li><a runat="server" href="~/">Home</a></li>
                          
                                     <li><a runat="server" href="~/Maintenance/Artists">Artists</a></li>
                                     <li><a runat="server" href="~/Maintenance/Disks">Disks</a></li>
                                     <li><a runat="server" href="~/Maintenance/Borrower">Borrower</a></li>
+                                    <li><a runat="server" href="~/Maintenance/CheckOut">Check Out</a></li>
                                 
                         
                     </ul>
@@ -72,8 +73,8 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Disk Inventory Application</p>
+            <footer class="footer">
+                &copy; <%: DateTime.Now.Year %> - Disk Inventory Application
             </footer>
         </div>
         <asp:ScriptManager runat="server">

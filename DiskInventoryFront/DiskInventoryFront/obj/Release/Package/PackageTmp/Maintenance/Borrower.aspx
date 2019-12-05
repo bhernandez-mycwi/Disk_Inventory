@@ -1,10 +1,19 @@
-﻿<%@ Page Title="Borrower" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Borrower.aspx.cs" Inherits="DiskInventoryFront.Borrower" %>
+﻿<%--/*************************************************************************************/
+/*  Date	Name	Description                                                      */
+/*  -----------------------------------------------------------------------------    */
+/*                                                                                   */
+/*  12/02/2019  Brian Hernandez   Page to insert/update/delete borrower info          */
+/*************************************************************************************/--%>
+<%@ Page Title="Borrower" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Borrower.aspx.cs" Inherits="DiskInventoryFront.Borrower" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class =" text-center">
                              <%--Page to insert/update/delete borrowers with stored procedures--%>
+        <!-- Borrower Management can only be accessed once user is authenticated -->
+
         <br />
-            <h2>Enter Borrower Information</h2>
+            
             <div id="Borrower">
+                <h2>Enter Borrower Information</h2>
             <asp:GridView ID="GridView1" runat="server" AllowSorting="True" AutoGenerateColumns="False" DataKeyNames="borrower_id" DataSourceID="SqlDataSource1">
                 <Columns>
                     <asp:TemplateField ShowHeader="False">
@@ -58,7 +67,7 @@
                     </asp:TemplateField>
                 </Columns>
         </asp:GridView>
-                </div>
+                
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:disk_inventoryBHConnectionString2 %>" 
             DeleteCommand="EXEC sp_Delete_Borrower @borrower_id" 
             InsertCommand="EXEC sp_Insert_Borrower @borrower_first, @borrower_last, @borrower_phone_number"
@@ -109,12 +118,12 @@
             <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtPhone" CssClass="text-danger" Display="Dynamic" ErrorMessage="This field is required" ValidationGroup="borrower"></asp:RequiredFieldValidator>
     </p>
         <p>
-            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtPhone" CssClass="text-danger" Display="Dynamic" ErrorMessage="Please use this format(999-999-9999)" ValidationExpression="((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}"></asp:RegularExpressionValidator>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtPhone" CssClass="text-danger" Display="Dynamic" ErrorMessage="Please use this format(999-999-9999)" ValidationExpression="((\(\d{3}\) ?)|(\d{3}-))?\d{3}-\d{4}" ValidationGroup="borrower"></asp:RegularExpressionValidator>
     </p>
     <p>
         &nbsp;</p>
     <p>
-        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" CssClass="btn-primary" />
+        <asp:Button ID="btnSubmit" runat="server" Text="Submit" OnClick="btnSubmit_Click" CssClass="btn-primary" ValidationGroup="borrower" />
     </p>
     <p>
         &nbsp;</p>
@@ -126,6 +135,6 @@
             <p>
                 <asp:Label ID="lblMessage" runat="server"></asp:Label>
             </p>
-        
+        </div>
     </div>
 </asp:Content>

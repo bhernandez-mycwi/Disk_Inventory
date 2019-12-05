@@ -1,10 +1,18 @@
-﻿<%@ Page Title="Disk Info" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Disks.aspx.cs" Inherits="DiskInventoryFront.Disks" %>
+﻿<%--/*************************************************************************************/
+/*  Date	Name	Description                                                          */
+/*  -----------------------------------------------------------------------------        */
+/*                                                                                        */
+/*  12/02/2019  Brian Hernandez   Page to insert/update/delete disk info                  */
+/*************************************************************************************/--%>
+<%@ Page Title="Disk Info" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Disks.aspx.cs" Inherits="DiskInventoryFront.Disks" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <!-- Disk Management can only be accessed once user is authenticated -->
+
     <p>
     <br />
 </p>
     
-    <h1>Disk Information</h1>
+    
     <%-- Page to insert/update/delete Disk Info using stored procedures--%>
 <p class="text-center">
     <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:disk_inventoryBHConnectionString2 %>" 
@@ -34,6 +42,7 @@
 </p>
     
         <div id="Disks">
+            <h1>Disk Information</h1>
     <asp:ListView ID="ListView1" runat="server" DataKeyNames="disk_id" DataSourceID="SqlDataSource1" InsertItemPosition="LastItem" style="margin-right: 0px">
         
         <AlternatingItemTemplate>
@@ -140,13 +149,13 @@
                     <%-- Disk Type requires validation for data type, cannot accept nulls, and must be either 1 or 2 --%>
                     <asp:TextBox ID="disk_typeTextBox2" runat="server" Text='<%# Bind("disk_type") %>' />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" CssClass="text-danger" Display="Dynamic" ErrorMessage="Disk Type is required" ControlToValidate="disk_typeTextBox2">*</asp:RequiredFieldValidator>
-                    <asp:RangeValidator ID="RangeValidator2" runat="server" CssClass="text-danger" Display="Dynamic" ErrorMessage="Disk Status must be either a 1 or 2" ControlToValidate="disk_typeTextBox2" MaximumValue="2" MinimumValue="1">*</asp:RangeValidator>
+                    <asp:RangeValidator ID="RangeValidator2" runat="server" CssClass="text-danger" Display="Dynamic" ErrorMessage="Disk Status must be either a 1 or 2" ControlToValidate="disk_typeTextBox2" MaximumValue="2" MinimumValue="1" >*</asp:RangeValidator>
                 </td>
                 <td>
                     <%-- Genre requires validation for data type, cannot accept nulls, and must be between 1 and 4--%>
                     <asp:TextBox ID="genre_idTextBox2" runat="server" Text='<%# Bind("genre_id") %>' ControlToValidate="genre_idTextBox2" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator9" runat="server" CssClass="text-danger" Display="Dynamic" ErrorMessage="Disk Genre is required" ControlToValidate="genre_idTextBox2">*</asp:RequiredFieldValidator>
-                    <asp:RangeValidator ID="RangeValidator3" runat="server" CssClass="text-danger" Display="Dynamic" ErrorMessage="Disk Status must be either a 1 or 2" ControlToValidate="genre_idTextBox2" MaximumValue="4" MinimumValue="1">*</asp:RangeValidator>
+                    <asp:RangeValidator ID="RangeValidator3" runat="server" CssClass="text-danger" Display="Dynamic" ErrorMessage="Genre ID must be between 1 and 4" ControlToValidate="genre_idTextBox2" MaximumValue="4" MinimumValue="1" Type="Integer">*</asp:RangeValidator>
                 </td>
                 <td>
                     <%-- Date requires validation for data type and annot accept nulls --%>
@@ -159,7 +168,7 @@
         <ItemTemplate>
             <tr style="">
                 <td>
-                    <asp:Button ID="DeleteButton0" runat="server" CommandName="Delete" Text="Delete" CssClass="btn-danger" />
+                    <asp:Button ID="DeleteButton0" runat="server" CommandName="Delete" Text="Delete" CssClass="btn-danger" CausesValidation="False" />
                     <asp:Button ID="EditButton0" runat="server" CommandName="Edit" Text="Edit" CausesValidation="False" CssClass="btn-primary" />
                 </td>
                 <td>
@@ -239,8 +248,11 @@
             </tr>
         </SelectedItemTemplate>
     </asp:ListView>
+            
             </div>
     
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="text-danger" DisplayMode="List" BackColor="White" />
+    
 
-    <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="text-danger" DisplayMode="List" />
+    
 </asp:Content>

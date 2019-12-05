@@ -168,6 +168,8 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Error\NotFound.aspx" />
+    <Content Include="Images\cdbackground.jpg" />
     <Content Include="Maintenance\Artists.aspx" />
     <Content Include="Maintenance\Borrower.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -177,6 +179,7 @@
     <Content Include="Content\JavaScript.js" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="Maintenance\CheckOut.aspx" />
     <Content Include="Maintenance\Disks.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -341,6 +344,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Error\NotFound.aspx.cs">
+      <DependentUpon>NotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error\NotFound.aspx.designer.cs">
+      <DependentUpon>NotFound.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Maintenance\Artists.aspx.cs">
       <DependentUpon>Artists.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -361,6 +371,13 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Maintenance\CheckOut.aspx.cs">
+      <DependentUpon>CheckOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Maintenance\CheckOut.aspx.designer.cs">
+      <DependentUpon>CheckOut.aspx</DependentUpon>
     </Compile>
     <Compile Include="Maintenance\Disks.aspx.cs">
       <DependentUpon>Disks.aspx</DependentUpon>

@@ -17,5 +17,18 @@ namespace DiskInventoryFront
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            var serverError = Server.GetLastError() as HttpException;
+
+            if (serverError != null)
+            {
+                if (serverError.GetHttpCode() == 404)
+                {
+                    Server.ClearError();
+                    Server.Transfer("~/Error/NotFound.aspx");
+                }
+            }
+        }
     }
 }

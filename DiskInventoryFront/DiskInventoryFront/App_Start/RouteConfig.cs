@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Routing;
 using Microsoft.AspNet.FriendlyUrls;
 
+
 namespace DiskInventoryFront
 {
     public static class RouteConfig
@@ -11,8 +12,11 @@ namespace DiskInventoryFront
         public static void RegisterRoutes(RouteCollection routes)
         {
             var settings = new FriendlyUrlSettings();
-            settings.AutoRedirectMode = RedirectMode.Permanent;
+
+            settings.AutoRedirectMode = RedirectMode.Temporary;
             routes.EnableFriendlyUrls(settings);
+
+
         }
     }
 }

@@ -1,4 +1,13 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DiskInventoryFront._Default" %>
+﻿<%--/*************************************************************************************/
+/*  Date	Name	          Description                                                */
+/*  -----------------------------------------------------------------------------        */
+/*                                                                                       */
+/*          Brian Hernandez   Site home page  
+                                                                                    */
+/*************************************************************************************/--%>
+
+
+<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="DiskInventoryFront._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 

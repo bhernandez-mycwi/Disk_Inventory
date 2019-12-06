@@ -1,4 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NotFound.aspx.cs" Inherits="DiskInventoryFront.Error.NotFound" %>
+﻿<%--/*************************************************************************************/
+/*  Date	    Name	          Description                                            */
+/*  -----------------------------------------------------------------------------        */
+/*                                                                                       */
+/*  12/05/2019  Brian Hernandez   Initial deploy of Error page
+                                                                                         */
+/*************************************************************************************/--%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="NotFound.aspx.cs" Inherits="DiskInventoryFront.Error.NotFound" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <br />
     <div id="errorPage">

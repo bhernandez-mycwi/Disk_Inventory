@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*************************************************************************************/
+/*  Date	Name	Description                                                      */
+/*  -----------------------------------------------------------------------------    */
+/*                                                                                   */
+/*  11/15/2019  Brian Hernandez   Initial deploy of Borrower Page  
+                                                                                     */
+/*************************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

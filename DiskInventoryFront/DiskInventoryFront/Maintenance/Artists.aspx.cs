@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*************************************************************************************/
+/*  Date	Name	Description                                                      */
+/*  -----------------------------------------------------------------------------    */
+/*                                                                                   */
+/*  12/02/2019  Brian Hernandez   Initial deploy of Artist Page  
+                                       */
+/*************************************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;

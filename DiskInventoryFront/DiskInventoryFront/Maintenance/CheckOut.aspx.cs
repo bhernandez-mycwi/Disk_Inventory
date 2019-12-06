@@ -20,8 +20,12 @@ namespace DiskInventoryFront.Maintenance
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-        }
+            if (Session["Name"] != null)
+            {
+                lblSummary.Text = "<b>" + Session["Name"].ToString()+ "</b>" + " has checked out " + "<i>" + Session["Disk"].ToString() + "</i>" ;
+
+            }
+    }
 
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
@@ -78,6 +82,9 @@ namespace DiskInventoryFront.Maintenance
                     cmd2.Parameters.AddWithValue("@borrow_date", DateTime.Now.ToShortDateString());
                     cmd2.ExecuteNonQuery();
                     con2.Close();
+
+                    Session["Name"] = DropDownList1.SelectedItem;
+                    Session["Disk"] = lblDiskNameOutput.Text;
 
                     Response.Redirect("CheckOut.aspx");
 

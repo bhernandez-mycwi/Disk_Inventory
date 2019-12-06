@@ -2,7 +2,9 @@
 /*  Date	Name	Description                                                      */
 /*  -----------------------------------------------------------------------------    */
 /*                                                                                   */
-/*  12/02/2019  Brian Hernandez   Initial deploy of Check Out Page                   */
+/*  12/02/2019  Brian Hernandez   Initial deploy of Check Out Page  
+    12/5/2019   Brian Hernandez   Added summary of who checked out what in a label using
+                                    Session data                                    */
 /*************************************************************************************/--%>
 <%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CheckOut.aspx.cs" Inherits="DiskInventoryFront.Maintenance.CheckOut" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
@@ -10,6 +12,8 @@
     <div id ="Checkout">
         
         <h1>Check Out</h1>
+        <asp:Label ID="lblSummary" runat="server"></asp:Label>
+        
     <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="disk_id" DataSourceID="SqlDataSource1" OnSelectedIndexChanged = "OnSelectedIndexChanged">
         <Columns>
             <asp:BoundField DataField="disk_name" HeaderText="Disk Name" SortExpression="disk_name" >
@@ -47,7 +51,7 @@
             <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="SqlDataSource2" DataTextField="borrower_first" DataValueField="borrower_id"></asp:DropDownList>
         </div>
             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:disk_inventoryBHConnectionString2 %>"
-                SelectCommand="SELECT [borrower_id], [borrower_last]+ ', ' + [borrower_first] as borrower_first FROM [borrower]"></asp:SqlDataSource>
+                SelectCommand="SELECT [borrower_id], [borrower_first]+ ' ' + [borrower_last] as borrower_first FROM [borrower]"></asp:SqlDataSource>
         
         <div>
             <asp:Label ID="lblDiskName" runat="server" Text="Disk Name: "></asp:Label><asp:Label ID="lblDiskNameOutput" runat="server"></asp:Label>
